@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
-while IFS= read -r var; do
-  printf "%s: %s\n" "$var" "${!var}"
-done < <(compgen -e GITHUB_)
+prefixes=(GITHUB ACTION)
+
+show-vars() {
+  local var
+
+  while IFS= read -r var; do
+    printf "%s: %s\n" "$var" "${!var}"
+  done < <(compgen -e "$1"_)
+}
+
+for prefix in "${prefixes[@]}"; do
+  show-vars "$prefix"
+done
